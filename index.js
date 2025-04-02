@@ -21,7 +21,6 @@ app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-connectDB();
 
 // Add dummy products after connection
 mongoose.connection.once("open", () => {
@@ -32,11 +31,10 @@ mongoose.connection.once("open", () => {
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/auth", authRoutes);
+app.use(cors({ origin: "http://localhost:3000" })); // Restrict CORS to Next.js dev server
+app.use(bodyParser.json());
+app.use(cors({ origin: "*" }));
 
-// Test endpoint
-app.get("/api/hello", (req, res) => {
-  res.json({ message: "Hello from Express with MongoDB!" });
-});
 
 // Start server
 app.listen(PORT, () => {
